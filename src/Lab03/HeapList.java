@@ -6,26 +6,21 @@
 
 package Lab03;
 
-
-
-
+import java.util.LinkedList;
 
 /**
  *
  * @author Dinanajana
- * 
+ * @param <T>
  */
-public class Heap<T extends Comparable<T>> implements HeapInterface 
-{ 
-    private final int default_size = 10; 
+public class HeapList<T extends Comparable<T>> implements HeapInterface {
     
-    private final T[] array;
-    private int size; 
+    private final LinkedList <T> arrayList;
     
-
-    public Heap() { 
-	array = (T[]) new Comparable[default_size];
-	size  = 0; 
+    
+    public HeapList() { 
+	arrayList = new LinkedList <>(); 
+	
     }
 
     @Override
@@ -38,40 +33,42 @@ public class Heap<T extends Comparable<T>> implements HeapInterface
     public int rightChild(int index) { return 2 * index + 2;   }
     
     @Override
-    public T myParent(int index) { return array[parent(index)]; }
+    public T myParent(int index) { return arrayList.get(parent(index)); }
     //@Override
     
     
     @Override
-    public boolean hasLeftChild(int i) { return leftChild(i) < size; } 
+    public boolean hasLeftChild(int i) { return leftChild(i) < arrayList.size(); } 
     @Override
-    public boolean hasRightChild(int i){ return rightChild(i) < size; } 
+    public boolean hasRightChild(int i){ return rightChild(i) < arrayList.size(); } 
 
     @Override
     public void swap(int a, int b) { 
-	T tmp = array[a];
+	T tmp = arrayList.get(a);
         
-	array[a] = array[b]; 
-	array[b] = tmp;
+	arrayList.set(a, arrayList.get(b)); 
+	arrayList.set(b, tmp);
     }
     
     
 
-    public boolean isEmpty() { return (size == 0); } 
+    @Override
+    public boolean isEmpty() { return (arrayList.size() == 1); } 
 
 
     /* adding heap */
     public void add(T value) { 
-	if(size == default_size) throw new IllegalStateException("Full array");
-	array[size++] = value; 
+	
+	arrayList.add(value); 
 	bubbleUp(); 
     }
 
+    @Override
     public void bubbleUp() { 
-	if(size == 0) throw new IllegalStateException("Shape error");
-	int index = size - 1;  
+	if(arrayList.size() == 0) throw new IllegalStateException("Shape error");
+	int index = arrayList.size() - 1;  
 	while(!isRoot(index)) { 
-	    if(myParent(index).compareTo(array[index]) <= 0) break; 
+	    if(myParent(index).compareTo(arrayList.get(index)) <= 0) break; 
 	    /* else part */
 	    swap(parent(index), index); 
 	    index = parent(index);
@@ -83,9 +80,9 @@ public class Heap<T extends Comparable<T>> implements HeapInterface
     @Override
     public T remove() {
 	if(isEmpty()) return null; 
-	T res = array[0]; /* root */
-	array[0] = array[size-1]; 
-	size --; 
+	T res = arrayList.get(0); /* root */
+	arrayList.set(0, arrayList.get(arrayList.size()-1)); 
+	//size --; 
 	bubbleDown(); 
 	return res;
     }
@@ -96,18 +93,18 @@ public class Heap<T extends Comparable<T>> implements HeapInterface
         
         int index = 0;
         
-            while(index < size ){
+            while(index < arrayList.size() ){
                 
                 
                 if(hasLeftChild(index)&&
                         hasRightChild(index)){
                     
                         //check for equal cases
-                        if(array[leftChild(index)].compareTo
-                           (array[rightChild(index)]) >= 0){
+                        if(arrayList.get(leftChild(index)).compareTo
+                           (arrayList.get(rightChild(index))) >= 0){
                     
-                            if(array[index].compareTo
-                            (array[rightChild(index)]) >= 0){
+                            if(arrayList.get(index).compareTo
+                            (arrayList.get(rightChild(index))) >= 0){
                     
                             swap(index,rightChild(index));
                         
@@ -119,11 +116,11 @@ public class Heap<T extends Comparable<T>> implements HeapInterface
                             
                         }
                         //check left
-                        else if(array[leftChild(index)].compareTo
-                                (array[rightChild(index)]) < 0){
+                        else if(arrayList.get(leftChild(index)).compareTo
+                                (arrayList.get(rightChild(index))) < 0){
                             
-                            if(array[index].compareTo
-                              (array[leftChild(index)]) > 0){
+                            if(arrayList.get(index).compareTo
+                              (arrayList.get(leftChild(index))) > 0){
                         
                             swap(index,leftChild(index));
                         
@@ -141,8 +138,8 @@ public class Heap<T extends Comparable<T>> implements HeapInterface
                     // Left child only
                     if(hasLeftChild(index) && !hasRightChild(index)){
                     
-                        if(array[index].compareTo
-                          (array[leftChild(index)]) > 0){
+                        if(arrayList.get(index).compareTo
+                          (arrayList.get(leftChild(index))) > 0){
                         
                             swap(index,leftChild(index));
                         
@@ -159,8 +156,8 @@ public class Heap<T extends Comparable<T>> implements HeapInterface
                 // Right child only
                 if(hasRightChild(index) && !hasLeftChild(index)){
                 
-                    if(array[index].compareTo
-                      (array[rightChild(index)]) > 0){
+                    if(arrayList.get(index).compareTo
+                      (arrayList.get(rightChild(index))) > 0){
                     
                         swap(index,rightChild(index));
                         
@@ -186,14 +183,15 @@ public class Heap<T extends Comparable<T>> implements HeapInterface
 
 
     public void show() {
-	for(int i=0; i<size; i++) 
-	    System.out.print(array[i] + " "); 
+        arrayList.stream().forEach((arrayList1) -> {
+            System.out.print(arrayList1 + " ");
+        });
 	System.out.println("=======");
     }
 
 
     public static void main(String [] args) {
-	Heap heap = new Heap<Integer>(); 
+	HeapList heap = new HeapList<>(); 
 
 	for(int i=0; i<10; i++) {
 	    heap.add((int) (Math.random() * 10)); 
@@ -206,10 +204,5 @@ public class Heap<T extends Comparable<T>> implements HeapInterface
 	    System.out.print(heap.remove());
 	
     }
-
     
-    
-       
-
 }
-	

@@ -13,7 +13,7 @@ package Lab03;
  */
 public interface HeapInterface <T extends Comparable<T>>  {
     
-    boolean isRoot(int index);
+    
     int leftChild(int index);
     int parent(int index);
     int rightChild(int index);
@@ -25,8 +25,8 @@ public interface HeapInterface <T extends Comparable<T>>  {
     
     void swap(int a,int b);
     boolean isEmpty();
-    //void add(T ele);
-    T remove();
-    void bubbleUp();
-    void bubbleDown();
+    void addElement(T ele);
+    T removeElement();
+    
+    
 }

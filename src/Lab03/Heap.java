@@ -17,7 +17,7 @@ package Lab03;
  */
 public class Heap<T extends Comparable<T>> implements HeapInterface 
 { 
-    private final int default_size = 10; 
+    private final int default_size = 1000; 
     
     private final T[] array;
     private int size; 
@@ -28,8 +28,8 @@ public class Heap<T extends Comparable<T>> implements HeapInterface
 	size  = 0; 
     }
 
-    @Override
-    public boolean isRoot(int index) {	return (index == 0);   }
+    //@Override
+    //public boolean isRoot(int index) {	return (index == 0);   }
     @Override
     public int leftChild(int index)  { return 2 * index + 1;  }
     @Override
@@ -43,9 +43,9 @@ public class Heap<T extends Comparable<T>> implements HeapInterface
     
     
     @Override
-    public boolean hasLeftChild(int i) { return leftChild(i) < size; } 
+    public boolean hasLeftChild(int index) { return leftChild(index) < size; } 
     @Override
-    public boolean hasRightChild(int i){ return rightChild(i) < size; } 
+    public boolean hasRightChild(int index){ return rightChild(index) < size; } 
 
     @Override
     public void swap(int a, int b) { 
@@ -57,44 +57,33 @@ public class Heap<T extends Comparable<T>> implements HeapInterface
     
     
 
+    @Override
     public boolean isEmpty() { return (size == 0); } 
 
 
     /* adding heap */
-    public void add(T value) { 
+    @Override
+    public void addElement(Comparable value) { 
 	if(size == default_size) throw new IllegalStateException("Full array");
-	array[size++] = value; 
-	bubbleUp(); 
-    }
-
-    public void bubbleUp() { 
-	if(size == 0) throw new IllegalStateException("Shape error");
+	array[size++] = (T) value; 
+	
+        if(size == 0) throw new IllegalStateException("Shape error");
 	int index = size - 1;  
-	while(!isRoot(index)) { 
+	while(size != 0) { 
 	    if(myParent(index).compareTo(array[index]) <= 0) break; 
-	    /* else part */
+	    
 	    swap(parent(index), index); 
 	    index = parent(index);
 	}
-    }  
-
-    /* removing */
+    }
 
     @Override
-    public T remove() {
+    public T removeElement() {
 	if(isEmpty()) return null; 
 	T res = array[0]; /* root */
 	array[0] = array[size-1]; 
 	size --; 
-	bubbleDown(); 
-	return res;
-    }
-
-    @Override
-    public void bubbleDown() { 
-	/* implmement me */
-        
-        int index = 0;
+	int index = 0;
         
             while(index < size ){
                 
@@ -178,12 +167,9 @@ public class Heap<T extends Comparable<T>> implements HeapInterface
                     break;
                 }
                 
-            }
-        
+            } 
+	return res;
     }
-            
-            
-
 
     public void show() {
 	for(int i=0; i<size; i++) 
@@ -195,15 +181,15 @@ public class Heap<T extends Comparable<T>> implements HeapInterface
     public static void main(String [] args) {
 	Heap heap = new Heap<Integer>(); 
 
-	for(int i=0; i<10; i++) {
-	    heap.add((int) (Math.random() * 10)); 
+	for(int i=0; i<100; i++) {
+	    heap.addElement((int) (Math.random() * 100)); 
 	    heap.show();
 	}
 
 
 	System.out.println("You should see sorted numbers");
 	while(!heap.isEmpty()) 
-	    System.out.print(heap.remove());
+	    System.out.print(heap.removeElement()+" ");
 	
     }
 

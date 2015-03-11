@@ -23,8 +23,8 @@ public class HeapList<T extends Comparable<T>> implements HeapInterface {
 	
     }
 
-    @Override
-    public boolean isRoot(int index) {	return (index == 0);   }
+  //  @Override
+  //  public boolean isRoot(int index) {	return (index == 0);   }
     @Override
     public int leftChild(int index)  { return 2 * index + 1;  }
     @Override
@@ -53,47 +53,34 @@ public class HeapList<T extends Comparable<T>> implements HeapInterface {
     
 
     @Override
-    public boolean isEmpty() { return (arrayList.size() == 1); } 
+    public boolean isEmpty() { return (arrayList.size() == 0); } 
 
 
     /* adding heap */
-    public void add(T value) { 
-	
-	arrayList.add(value); 
-	bubbleUp(); 
-    }
-
     @Override
-    public void bubbleUp() { 
+    public void addElement(Comparable value) { 
+	
+	arrayList.add((T)value); 
 	if(arrayList.size() == 0) throw new IllegalStateException("Shape error");
 	int index = arrayList.size() - 1;  
-	while(!isRoot(index)) { 
+	while(index != 0) { 
 	    if(myParent(index).compareTo(arrayList.get(index)) <= 0) break; 
 	    /* else part */
 	    swap(parent(index), index); 
 	    index = parent(index);
 	}
-    }  
-
+    }
     /* removing */
 
     @Override
-    public T remove() {
+    public T removeElement() {
 	if(isEmpty()) return null; 
 	T res = arrayList.get(0); /* root */
 	arrayList.set(0, arrayList.get(arrayList.size()-1)); 
-	//size --; 
-	bubbleDown(); 
-	return res;
-    }
-
-    @Override
-    public void bubbleDown() { 
-	/* implmement me */
-        
+        arrayList.removeLast();
         int index = 0;
         
-            while(index < arrayList.size() ){
+            while(index <= arrayList.size() ){
                 
                 
                 if(hasLeftChild(index)&&
@@ -176,11 +163,10 @@ public class HeapList<T extends Comparable<T>> implements HeapInterface {
                 }
                 
             }
+	
         
+	return res;
     }
-            
-            
-
 
     public void show() {
         arrayList.stream().forEach((arrayList1) -> {
@@ -193,15 +179,17 @@ public class HeapList<T extends Comparable<T>> implements HeapInterface {
     public static void main(String [] args) {
 	HeapList heap = new HeapList<>(); 
 
-	for(int i=0; i<10; i++) {
-	    heap.add((int) (Math.random() * 10)); 
+	for(int i=0; i<100; i++) {
+	    heap.addElement((int) (Math.random() * 100)); 
 	    heap.show();
 	}
 
 
 	System.out.println("You should see sorted numbers");
 	while(!heap.isEmpty()) 
-	    System.out.print(heap.remove());
+	    
+            System.out.print(heap.removeElement()+ " ");
+        
 	
     }
     

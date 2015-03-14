@@ -17,7 +17,7 @@ public interface HeapInterface <T extends Comparable<T>>  {
     int leftChild(int index);
     int parent(int index);
     int rightChild(int index);
-    T myParent(int index);
+    T parentValue(int index);
     
     
     boolean hasLeftChild(int i);

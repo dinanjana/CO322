@@ -23,8 +23,7 @@ public class HeapList<T extends Comparable<T>> implements HeapInterface {
 	
     }
 
-  //  @Override
-  //  public boolean isRoot(int index) {	return (index == 0);   }
+  
     @Override
     public int leftChild(int index)  { return 2 * index + 1;  }
     @Override
@@ -33,7 +32,7 @@ public class HeapList<T extends Comparable<T>> implements HeapInterface {
     public int rightChild(int index) { return 2 * index + 2;   }
     
     @Override
-    public T myParent(int index) { return arrayList.get(parent(index)); }
+    public T parentValue(int index) { return arrayList.get(parent(index)); }
     //@Override
     
     
@@ -56,7 +55,7 @@ public class HeapList<T extends Comparable<T>> implements HeapInterface {
     public boolean isEmpty() { return (arrayList.size() == 0); } 
 
 
-    /* adding heap */
+    
     @Override
     public void addElement(Comparable value) { 
 	
@@ -64,18 +63,18 @@ public class HeapList<T extends Comparable<T>> implements HeapInterface {
 	if(arrayList.size() == 0) throw new IllegalStateException("Shape error");
 	int index = arrayList.size() - 1;  
 	while(index != 0) { 
-	    if(myParent(index).compareTo(arrayList.get(index)) <= 0) break; 
-	    /* else part */
+	    if(parentValue(index).compareTo(arrayList.get(index)) <= 0) break; 
+	    
 	    swap(parent(index), index); 
 	    index = parent(index);
 	}
     }
-    /* removing */
+    
 
     @Override
     public T removeElement() {
 	if(isEmpty()) return null; 
-	T res = arrayList.get(0); /* root */
+	T res = arrayList.get(0); 
 	arrayList.set(0, arrayList.get(arrayList.size()-1)); 
         arrayList.removeLast();
         int index = 0;
@@ -168,11 +167,11 @@ public class HeapList<T extends Comparable<T>> implements HeapInterface {
 	return res;
     }
 
-    public void show() {
+    public void showHeap() {
         arrayList.stream().forEach((arrayList1) -> {
             System.out.print(arrayList1 + " ");
         });
-	System.out.println("=======");
+	
     }
 
 
@@ -181,11 +180,11 @@ public class HeapList<T extends Comparable<T>> implements HeapInterface {
 
 	for(int i=0; i<100; i++) {
 	    heap.addElement((int) (Math.random() * 100)); 
-	    heap.show();
+	    heap.showHeap();
 	}
 
 
-	System.out.println("You should see sorted numbers");
+	System.out.println("\n Sorted List :");
 	while(!heap.isEmpty()) 
 	    
             System.out.print(heap.removeElement()+ " ");

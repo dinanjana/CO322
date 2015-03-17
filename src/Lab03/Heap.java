@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 
 package Lab03;
@@ -11,7 +9,8 @@ package Lab03;
 
 
 /**
- *
+ * main method present
+ * This the implementation for array
  * @author Dinanajana
  * 
  */
@@ -192,9 +191,10 @@ public class Heap<T extends Comparable<T>> implements HeapInterface
 
 	for(int i=0; i<100; i++) {
 	    heap.addElement((int) (Math.random() * 100)); 
-	    heap.showHeap();
+	    
 	}
-
+        
+        heap.showHeap();
 
 	System.out.println("\n Sorted List:");
 	while(!heap.isEmpty()) 

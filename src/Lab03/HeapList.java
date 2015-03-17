@@ -9,7 +9,8 @@ package Lab03;
 import java.util.LinkedList;
 
 /**
- *
+ * main method present
+ * this is the implementation for linked list
  * @author Dinanajana
  * @param <T>
  */
@@ -180,10 +181,10 @@ public class HeapList<T extends Comparable<T>> implements HeapInterface {
 
 	for(int i=0; i<100; i++) {
 	    heap.addElement((int) (Math.random() * 100)); 
-	    heap.showHeap();
+	   
 	}
-
-
+        heap.showHeap();
+        
 	System.out.println("\n Sorted List :");
 	while(!heap.isEmpty()) 
 	    

@@ -1,8 +1,6 @@
 
 package Lab04;
 
-import java.util.Random;
-
 /**
  *
  * @author Dinanajana
@@ -30,7 +28,7 @@ public class BatchNode{
         this.size = 0;
         this.maxIndex = 0;
         this.batch = batch;
-        students = new StudentNode[no_of_students*4];
+        students = new StudentNode[no_of_students*30000];
     }
     
     
@@ -118,14 +116,14 @@ public class BatchNode{
         
                 this.maxIndex = 0;
                 this.size = 0;
-                this.weightedSub = new Course[50];
+                this.weightedSub = new Course[150];
                 this.name = name;
     
             }
             
             public void addCourse(String name,String result){
         
-                if(size == 5) throw new IllegalStateException("Subjects full");
+                if(size == 6) throw new IllegalStateException("Subjects full");
                 
                 Course course = new Course(name,result);
                 putToCourseTree(course);
@@ -271,57 +269,17 @@ public class BatchNode{
             
             if(students[index] == null) return;
             
-            showStudents(2*index+1);
+            showStudents(2*index + 2);
             
             System.out.println("\nReg No: "+students[index].name +
-                    " GPA: "+students[index].GPA);
+                    " GPA: "+students[index].GPA );
             
             students[index].showGrades(index,0);
-            
-            showStudents(2*index + 2);
+            System.out.println();
+            showStudents(2*index + 1);
         
         
         }
     
-        public static void main(String [] args){
         
-        Random r = new Random();
-            
-        BatchNode batch = new BatchNode("E/11",69);
-        
-        
-        StudentNode student = batch.createStudent("E/11/"+r.nextInt(480));
-        
-        student.addCourse("CO325", "B");
-        student.addCourse("CO323", "A+");
-        student.addCourse("CO324", "B+");
-        student.addCourse("CO323", "A");
-        student.addCourse("CO321", "B-");
-        student.setGPA();
-        batch.addStudent(student);
-        
-        StudentNode student1 = batch.createStudent("E/11/"+r.nextInt(480));
-        
-        student1.addCourse("CO325", "C");
-        student1.addCourse("CO323", "C+");
-        student1.addCourse("CO324", "B+");
-        student1.addCourse("CO323", "A-");
-        student1.addCourse("CO321", "B-");
-        student1.setGPA();
-        batch.addStudent(student1);
-        
-        StudentNode student2 = batch.createStudent("E/11/"+r.nextInt(480));
-        
-        student2.addCourse("CO325", "B");
-        student2.addCourse("CO323", "C+");
-        student2.addCourse("CO324", "B+");
-        student2.addCourse("CO323", "A");
-        student2.addCourse("CO321", "B-");
-        student2.setGPA();
-        batch.addStudent(student2);
-        
-        batch.showStudents(0);
-        
-      
-    }   
 }
